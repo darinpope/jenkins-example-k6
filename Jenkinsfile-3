@@ -1,0 +1,15 @@
+pipeline {
+  agent any
+  stages {
+    stage('verify k6') {
+      steps {
+        sh 'k6 version'
+      }
+    }
+    stage('run k6 test') {
+      steps {
+        sh 'k6 run --vus 10 --duration 30s --out influxdb=http://192.168.1.48:8086/k6 script.js'
+      }
+    }
+  }
+}
